@@ -15,17 +15,17 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_superuser(self, username, email, password=None, **extra_fields):
+    def create_superuser(self, username, email, password=None):
         if password is None:
             raise TypeError("Superusers must have a password.")
         if email is None:
             raise TypeError("Superusers must have an email.")
 
-        user = self.create_user(username, email, password, **extra_fields)
+        user = self.create_user(username, email, password)
         user.is_superuser = True
         user.is_staff = True
         user.save()
-        return user
+        
     # def create_superuser(self, username, email, password=None, **extra_fields):
     #     if password is None:
     #         raise TypeError("Superusers must have a password.")
