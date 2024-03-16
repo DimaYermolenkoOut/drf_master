@@ -2,16 +2,15 @@ from django.db import models
 
 
 # Create your models here.
-class Expense(models.Model):
+class Income(models.Model):
 
-    CATEGORIES = (
-        ('ONLINE_SERVICES', 'ONLINE_SERVICES'),
-        ('TRAVEL', 'TRAVEL'),
-        ('FOOD', 'FOOD'),
-        ('RENT', 'RENT'),
+    SOURCE = (
+        ('SALARY', 'SALARY'),
+        ('BUSINESS', 'BUSINESS'),
+        ('PRESENT', 'PRESENT'),
         ('OTHERS', 'OTHERS'),
     )
-    category = models.CharField(max_length=255, choices=CATEGORIES)
+    source = models.CharField(max_length=255, choices=SOURCE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     owner = models.ForeignKey('authentication.User', on_delete=models.CASCADE)
     date = models.DateField()
@@ -21,4 +20,4 @@ class Expense(models.Model):
         ordering = ['-date']
 
     def __str__(self):
-        return str(self.owner) + "'s expenses"
+        return str(self.owner) + "'s income"
