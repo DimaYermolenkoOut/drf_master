@@ -9,7 +9,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import User
 from .serializers import RegisterSerializer, VerifyEmailSerializer, LoginSerializer, \
-    PasswordResetSerializer, SetNewPasswordSerializer
+    PasswordResetSerializer, SetNewPasswordSerializer, PasswordTokenCheckAPISerializer
 from .utils import Util
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -108,6 +108,7 @@ class RequestPasswordResetEmailView(generics.GenericAPIView):
 
 
 class PasswordTokenCheckAPI(generics.GenericAPIView):
+    serializer_class = PasswordTokenCheckAPISerializer
     def get(self, request, uidb64, token):
         try:
             id = smart_str(urlsafe_base64_decode(uidb64))

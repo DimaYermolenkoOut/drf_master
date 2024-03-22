@@ -1,5 +1,6 @@
 from django.contrib.sites.shortcuts import get_current_site
-from rest_framework import serializers
+from rest_framework import serializers, status
+from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
 from django.contrib.auth import authenticate
@@ -116,3 +117,20 @@ class SetNewPasswordSerializer(serializers.Serializer):
             return user
         except Exception as identifier:
             raise AuthenticationFailed('The reset link is invalid', 401)
+
+
+class PasswordTokenCheckAPISerializer(serializers.Serializer):
+
+    def get(self, request, uidb64, token):
+        try:
+            id = smart_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(id=id)
+
+            if not PasswordResetTokenGenerator().check_token(user, token):
+                return Response({'error': 'Token is not valid, please request a new one'}, status=status.HTTP_401_UNAUTHORIZED)
+
+            return Response({'success': True, 'message': 'Credentials Valid', 'uidb64': uidb64, 'token': token}, status=status.HTTP_200_OK)
+
+        except DjangoUnicodeDecodeError as identifier:
+            if not PasswordResetTokenGenerator().check_token(user):
+                return Response({'error': 'Token is not valid, please request a new one'}, status=status.HTTP_401_UNAUTHORIZED)
