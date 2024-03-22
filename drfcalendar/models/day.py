@@ -1,6 +1,9 @@
 from django.db import models
 from datetime import datetime, timedelta
 
+from authentication.models import User
+from drfcalendar.models import Service
+
 
 class Slot(models.Model):
     time = models.TimeField()
@@ -14,6 +17,7 @@ class Slot(models.Model):
 class Day(models.Model):
     data = models.DateField()
     slots = models.ManyToManyField(Slot)
+    week = models.ForeignKey('Week', on_delete=models.CASCADE, related_name='week_days')
 
     def book_slot(self, time, client_name, service_name, master_name, duration):
         slot = self.slots.get(time=time)
