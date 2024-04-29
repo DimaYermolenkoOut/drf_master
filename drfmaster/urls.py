@@ -15,6 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+
 from django.urls import path, include
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -22,6 +23,14 @@ from rest_framework import permissions
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg.views import get_schema_view
+
+import drfcalendar
+
+from rest_framework.routers import DefaultRouter
+from drfcalendar.viewsets import slots, BookingViewSet
+
+router = DefaultRouter()
+router.register('bookings', BookingViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -33,7 +42,7 @@ schema_view = get_schema_view(
       license=openapi.License(name="BSD License"),
    ),
    public=True,
-   permission_classes=(permissions.AllowAny,),
+   permission_classes=[permissions.AllowAny,],
 )
 
 
@@ -43,6 +52,8 @@ urlpatterns = [
     path('auth/', include('authentication.urls')),
     path('expenses/', include('expenses.urls')),
     path('income/', include('income.urls')),
+    path("slots/<int:master_id>/<int:service_id>/<str:date>/", slots),
+
     # path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     # path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
