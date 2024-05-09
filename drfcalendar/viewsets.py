@@ -27,4 +27,21 @@ class BookingViewSet(viewsets.ModelViewSet):
     serializer_class = BookingSerializer
 
 
+# @api_view(['POST'])
+# def book(request, master_id, service_id, date, start_time, end_time):
+#     master = User.objects.get(id=master_id)
+#     service = Service.objects.get(id=service_id)
+#
+#     date_ = datetime.strptime(date, '%Y-%m-%d').date()
+#     start_time = datetime.strptime(start_time, '%H:%M').time()
+#     end_time = datetime.strptime(end_time, '%H:%M').time()
+#
+#     booking = Booking.objects.create(
+#         start_time=datetime.combine(date_, start_time),
+#         end_time=datetime.combine(date_, end_time),
+#         client=request.user,
+#         master=master,
+#         service=service
+#     )
 
+    # return Response(BookingSerializer(booking).data)

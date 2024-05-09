@@ -53,6 +53,10 @@ urlpatterns = [
     path('expenses/', include('expenses.urls')),
     path('income/', include('income.urls')),
     path("slots/<int:master_id>/<int:service_id>/<str:date>/", slots),
+    path('api/', include(router.urls)),
+
+
+    # path('swagger(?P<format>\.json|\.yaml)', schema_view.without_ui(cache_timeout=0), name='schema-json'),
 
     # path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

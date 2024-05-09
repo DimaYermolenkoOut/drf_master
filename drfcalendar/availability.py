@@ -56,6 +56,6 @@ def get_slots_for_service(master, date_, service):
 
             service_slots.append(Slot(start_time.time(), end_time.time()))
             # start_time = end_time
-            start_time += timedelta(minutes=15)
+            start_time += timedelta(minutes=30)
 
     return service_slots
