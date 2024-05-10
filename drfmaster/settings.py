@@ -51,6 +51,13 @@ INSTALLED_APPS = [
     'expenses',
     'income',
     'drfcalendar',
+
+    'allauth',
+    'allauth.account',
+    # Optional -- requires install using `django-allauth[socialacocunt]`.
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
 ]
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
@@ -71,6 +78,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Add the account middleware:
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'drfmaster.urls'
@@ -86,6 +96,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # `allauth` needs this from django
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -163,9 +175,55 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
 }
 
+AUTHENTICATION_BACKENDS = (
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# Provider specific settings
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         # For each OAuth based provider, either add a ``SocialApp``
+#         # (``socialaccount`` app) containing the required client
+#         # credentials, or list them here:
+#         'drfmaster': {
+#             'client_id': '786254398226-dd0kggua21ref459e0k1bgn7gjbna9ki.apps.googleusercontent.com',
+#             'secret': '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',
+#             'key': ''
+#         }
+#     }
+# }
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+            # 'https://www.googleapis.com/auth/spreadsheets',
+            # 'https://www.googleapis.com/auth/drive',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'offline',
+        }
+    },
+}
+
+# Django-allauth
+SITE_ID = 2
+
+LOGIN_REDIRECT_URL = '/admin'
+LOGOUT_REDIRECT_URL = '/'
+
+SOCIALACCOUNT_STORE_TOKENS = True
+
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+# google auth https://www.bing.com/chat?form=NTPCHB
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '910422405394-5v18827do2d2321vu6n1ku7f14gpmk0i.apps.googleusercontent.com'
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'

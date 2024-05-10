@@ -18,6 +18,14 @@ from django.utils.encoding import smart_str, smart_bytes, force_str, DjangoUnico
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+# from social_django.utils import load_strategy, load_backend
+# from social_core.exceptions import MissingBackend
+from rest_framework_simplejwt.tokens import RefreshToken
+
+
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
@@ -131,3 +139,26 @@ class SetNewPasswordAPIView(generics.GenericAPIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response({'success': True, 'message': 'Password reset success'}, status=status.HTTP_200_OK)
+
+#
+# class GoogleLogin(APIView):
+#     def post(self, request):
+#         token_id = request.data['tokenId']
+#
+#         try:
+#             strategy = load_strategy(request)
+#             backend = load_backend(strategy=strategy, name='google-oauth2', redirect_uri=None)
+#
+#             user = backend.do_auth(token_id)
+#
+#             if user and user.is_active:
+#                 refresh = RefreshToken.for_user(user)
+#                 return Response({
+#                     'refresh': str(refresh),
+#                     'access': str(refresh.access_token),
+#                 }, status=status.HTTP_200_OK)
+#
+#         except MissingBackend:
+#             return Response({'error': 'Ошибка авторизации.'}, status=status.HTTP_400_BAD_REQUEST)
+#
+#         return Response({'error': 'Ошибка авторизации.'}, status=status.HTTP_400_BAD_REQUEST)
