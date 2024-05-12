@@ -59,3 +59,27 @@ def get_slots_for_service(master, date_, service):
             start_time += timedelta(minutes=30)
 
     return service_slots
+
+# get slots for service ahead for {} days
+# def get_slots_for_service_ahead(master, date_, service, days):
+#     # 09:00 - 13:00 , 14:00 - 18:00, 18:30 - 19:00
+#     availability_slots = get_availability(master, date_)
+#
+#     # Divide slots into smaller slots based on the service duration
+#     # 09:00 - 10:00, 10:00 - 11:00, 11:00 - 12:00, 12:00 - 13:00 ...
+#     service_slots = []
+#     for slot in availability_slots:
+#         # 10:00
+#         start_time = datetime.combine(date_, slot.start_time)
+#         while start_time < datetime.combine(date_, slot.end_time):
+#             # 11:00
+#             end_time = (start_time + service.duration)
+#
+#             if end_time > datetime.combine(date_, slot.end_time):
+#                 break
+#
+#             service_slots.append(Slot(start_time.time(), end_time.time()))
+#             # start_time = end_time
+#             start_time += timedelta(days=days, minutes=30)
+#
+#     return service_slots

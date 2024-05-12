@@ -29,7 +29,7 @@ from drf_yasg.views import get_schema_view
 import drfcalendar
 
 from rest_framework.routers import DefaultRouter
-from drfcalendar.viewsets import slots, BookingViewSet
+from drfcalendar.viewsets import slots, BookingViewSet, slots_view
 
 router = DefaultRouter()
 router.register('bookings', BookingViewSet)
@@ -60,6 +60,7 @@ urlpatterns = [
     path('expenses/', include('expenses.urls')),
     path('income/', include('income.urls')),
     path("slots/<int:master_id>/<int:service_id>/<str:date>/", slots),
+    path('slots/<int:master_id>/<int:service_id>/', slots_view),
     path('api/', include(router.urls)),
 
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
