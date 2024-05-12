@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     # Optional -- requires install using `django-allauth[socialacocunt]`.
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.telegram',
 
 ]
 SWAGGER_SETTINGS = {
@@ -82,6 +83,7 @@ MIDDLEWARE = [
     # Add the account middleware:
     "allauth.account.middleware.AccountMiddleware",
 ]
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
 
 ROOT_URLCONF = 'drfmaster.urls'
 
@@ -196,6 +198,19 @@ AUTHENTICATION_BACKENDS = (
 #         }
 #     }
 # }
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'SCOPE': [
+#             'profile',
+#             'email',
+#             # 'https://www.googleapis.com/auth/spreadsheets',
+#             # 'https://www.googleapis.com/auth/drive',
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'offline',
+#         }
+#     },
+# }
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
@@ -208,6 +223,15 @@ SOCIALACCOUNT_PROVIDERS = {
             'access_type': 'offline',
         }
     },
+    'telegram': {
+        'dimay_my_bot': {
+            'client_id': '7193066110',
+            'secret': 'AAF-zjvAp1eDyMTaCphKTYQBhZTePJySZUU',
+        },
+        'AUTH_PARAMS': {
+            'auth_date_validity': 30
+        },
+    }
 }
 
 # Django-allauth
