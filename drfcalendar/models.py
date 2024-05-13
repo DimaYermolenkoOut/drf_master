@@ -1,9 +1,11 @@
 from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.dispatch import receiver
 
 from authentication.models import User
 from drfcalendar.availability import get_slots_for_service
+from telegram.client import send_message
 
 
 class Service(models.Model):
@@ -42,3 +44,18 @@ class Booking(models.Model):
     ):
         self.full_clean()
         super().save(force_insert, force_update, using, update_fields)
+
+
+@receiver(models.signals.post_save, sender=Booking)
+def send_booking_telegram_message(sender, instance, created, **kwargs):
+    if created:
+        chat_id = 6740309896
+
+        send_message(chat_id, message=f'Ваша заявка прийнята на {instance.start_time}')
+
+
+# send Email post_save Booking
+# @receiver(models.signals.post_save, sender=Booking)
+# def send_booking_email(sender, instance, created, **kwargs):
+#     if created:
+#

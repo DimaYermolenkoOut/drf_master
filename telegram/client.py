@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 token = os.getenv('TELEGRAM_BOT_TOKEN')
-def send_message(token, chat_id, message):
+def send_message(chat_id, message):
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     params = {
         "chat_id": chat_id,
@@ -18,4 +18,4 @@ def send_message(token, chat_id, message):
 
 
 if __name__ == '__main__':
-    send_message(token, 6740309896, 'Hello')
+    send_message(6740309896, 'Hello')
