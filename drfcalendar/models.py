@@ -4,6 +4,7 @@ from django.db import models
 from django.dispatch import receiver
 
 from authentication.models import User
+from authentication.utils import Util
 from drfcalendar.availability import get_slots_for_service
 from telegram.client import send_message
 
@@ -49,9 +50,13 @@ class Booking(models.Model):
 @receiver(models.signals.post_save, sender=Booking)
 def send_booking_telegram_message(sender, instance, created, **kwargs):
     if created:
+        # якщо у юзера є телеграм чат, то відправляємо повідомлення
         chat_id = 6740309896
 
         send_message(chat_id, message=f'Ваша заявка прийнята на {instance.start_time}')
+#         send email
+        Util.send_email(data={'email_subject': 'Ваша заявка прийнята', 'email_body': f'Ваша заявка прийнята на {instance.start_time}', 'to_email': instance.client.email})
+
 
 
 # send Email post_save Booking
