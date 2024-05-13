@@ -1,0 +1,6 @@
+створив папку telegram
+зробив бота через BotFather
+записав в .end token
+знайшов бота в телеграмі натиснув start
+стоврив в папці telegram файл client.py
+    створив функцію send_message
