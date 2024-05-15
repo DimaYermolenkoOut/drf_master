@@ -1,20 +1,3 @@
-<!--{% load socialaccount %}-->
-<!--<html>-->
-<!--<body>-->
-<!--<h1>Hillel Django Google Auth</h1>-->
-<!--{% if user.is_authenticated %}-->
-<!--  <p>Logged in as {{ user.username }}</p>-->
-<!--  <a href="{% provider_login_url 'google' process='connect' %}">connect Google account</a>-->
-<!--  <a href="{% provider_login_url 'telegram' process='connect' %}">connect Telegram account</a>-->
-<!--{% else %}-->
-<!--  <a href="{% provider_login_url 'google' %}">Login with Google</a>-->
-<!--  <a href="{% provider_login_url 'telegram' %}">Login with Telegram</a>-->
-
-<!--{% endif %}-->
-
-<!--</body>-->
-<!--</html>-->
-
 {% load socialaccount %}
 <html>
 <head>
@@ -31,6 +14,7 @@
   <p>Logged in as {{ user.username }}</p>
   <a href="{% provider_login_url 'google' process='connect' %}">connect Google account</a>
   <a href="{% provider_login_url 'telegram' process='connect' %}">connect Telegram account</a>
+  <p><a href="/docs/">Continue</a></p>
 {% else %}
   <a href="{% provider_login_url 'google' %}">Login with Google</a>
   <a href="{% provider_login_url 'telegram' %}">Login with Telegram</a>

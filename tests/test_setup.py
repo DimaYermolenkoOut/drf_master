@@ -11,6 +11,8 @@ class TestSetUp(APITestCase):
         self.user_data = User.objects.create_user(username='testuser', password='testpassword')
         self.credentials = {
             'username': 'testuser',
-            'password': 'testpassword'
+            'password': 'testpassword',
+            'email': 'test@example.com'
         }
         self.token = self.client.post(self.login_url, self.credentials, format='json').data['token']
+
