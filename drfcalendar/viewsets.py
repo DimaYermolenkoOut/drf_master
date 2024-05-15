@@ -8,8 +8,12 @@ from rest_framework.response import Response
 from drfcalendar.availability import get_slots_for_service
 from drfcalendar.models import Service, Booking
 from drfcalendar.serializers import SlotSerializer, BookingSerializer
+from django.http import JsonResponse
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+from collections import defaultdict
 
-# вивидить слоти за один день
+# виводить слоти за один день
 @api_view(['GET'])
 def slots(request, master_id, service_id, date):
     master = User.objects.get(id=master_id)
@@ -22,10 +26,6 @@ def slots(request, master_id, service_id, date):
     return Response(SlotSerializer(slots, many=True).data)
 
 
-from django.http import JsonResponse
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
-from collections import defaultdict
 @swagger_auto_schema(method='get', manual_parameters=[
     openapi.Parameter('start_date', openapi.IN_QUERY, description="Start date in the format YYYY-MM-DD", type=openapi.TYPE_STRING),
     openapi.Parameter('days_ahead', openapi.IN_QUERY, description="Number of days ahead to check availability", type=openapi.TYPE_INTEGER),
@@ -54,22 +54,3 @@ class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
 
-
-# @api_view(['POST'])
-# def book(request, master_id, service_id, date, start_time, end_time):
-#     master = User.objects.get(id=master_id)
-#     service = Service.objects.get(id=service_id)
-#
-#     date_ = datetime.strptime(date, '%Y-%m-%d').date()
-#     start_time = datetime.strptime(start_time, '%H:%M').time()
-#     end_time = datetime.strptime(end_time, '%H:%M').time()
-#
-#     booking = Booking.objects.create(
-#         start_time=datetime.combine(date_, start_time),
-#         end_time=datetime.combine(date_, end_time),
-#         client=request.user,
-#         master=master,
-#         service=service
-#     )
-
-    # return Response(BookingSerializer(booking).data)

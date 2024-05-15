@@ -59,6 +59,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.telegram',
 
+    "django_celery_beat",
+    'django_celery_results',
+
 ]
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
