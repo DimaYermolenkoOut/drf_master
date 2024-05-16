@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', '0.0.0.0', 'drfmaster.herokuapp.com']
 
 AUTH_USER_MODEL = 'authentication.User'
 # Application definition
@@ -254,3 +254,21 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 # google auth https://www.bing.com/chat?form=NTPCHB
 # SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '910422405394-5v18827do2d2321vu6n1ku7f14gpmk0i.apps.googleusercontent.com'
 # SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+
+# Celery settings
+CELERY_BROKER_URL = os.environ["CELERY_BROKER_URL"]
+
+CELERY_BEAT_SCHEDULE = {
+    'hello_world': {
+        'task': 'drfcalendar.tasks.hello_world',
+        'schedule': 5.0,
+    },
+    'another_task': {
+        'task': 'drfcalendar.tasks.process_slots',
+        'schedule': 10.0,
+
+    },
+}
+
+CELERY_RESULT_BACKEND = "django-db"

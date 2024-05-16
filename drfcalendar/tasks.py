@@ -1,12 +1,19 @@
 import os
 import django
+from celery import shared_task
+
+from authentication.models import User
+from drfcalendar.availability import get_slots_for_service
+from drfcalendar.models import Booking, Service
+from datetime import datetime, timedelta
+
+from drfcalendar.serializers import SlotSerializer
+from google_sheets.api import write_to_sheet
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'drfmaster.settings')
 django.setup()
 
-from drfcalendar.models import Booking
 
-from google_sheets.api import write_to_sheet
 
 
 def write_google_sheet_books_report():
@@ -32,8 +39,29 @@ def write_google_sheet_books_report():
         write_google_sheet_books_report()
 
 
-if __name__ == "__main__":
-    write_google_sheet_books_report()
+@shared_task
+def hello_world_task():
+    print('Hello, World!')
+
+
+@shared_task
+def process_slots(master_id, service_id, date):
+    master = User.objects.get(id=master_id)
+    service = Service.objects.get(id=service_id)
+
+    date_ = datetime.strptime(date, '%Y-%m-%d').date()
+
+    slots = get_slots_for_service(master, date_, service)
+
+    serialized_slots = SlotSerializer(slots, many=True).data
+    return serialized_slots
+
+
+
+
+
+# if __name__ == "__main__":
+#     write_google_sheet_books_report()
 # має такий вивід
 # tube.ermolenko@gmail.com	less-2 90	2024-05-12 12:00:00+00:00	2024-05-12 13:30:00+00:00
 # tube.ermolenko@gmail.com	less-2 90	2024-05-12 14:00:00+00:00	2024-05-12 15:30:00+00:00
@@ -48,3 +76,4 @@ if __name__ == "__main__":
 # tube.ermolenko@gmail.com	less-1 60	2024-05-15 16:30:00+00:00	2024-05-15 17:30:00+00:00
 # tube.ermolenko@gmail.com	less-1 60	2024-05-15 06:30:00+00:00	2024-05-15 07:30:00+00:00
 # tube.ermolenko@gmail.com	less-1 60	2024-05-15 07:30:00+00:00	2024-05-15 08:30:00+00:00
+

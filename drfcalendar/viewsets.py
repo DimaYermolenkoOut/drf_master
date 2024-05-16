@@ -1,5 +1,8 @@
 from datetime import datetime, timedelta
 
+from rest_framework.exceptions import ValidationError
+from rest_framework import status
+
 from authentication.models import User
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
@@ -53,4 +56,10 @@ def slots_view(request, master_id, service_id):
 class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
+
+    def create(self, request, *args, **kwargs):
+        try:
+            return super().create(request, *args, **kwargs)
+        except ValidationError as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
