@@ -9,8 +9,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from drfcalendar.availability import get_slots_for_service
-from drfcalendar.models import Service, Booking
-from drfcalendar.serializers import SlotSerializer, BookingSerializer, ServiceSerializer
+from drfcalendar.models import Service, Booking, MasterSchedule
+from drfcalendar.serializers import SlotSerializer, BookingSerializer, ServiceSerializer, \
+    MasterScheduleSerializer
 from django.http import JsonResponse
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -67,3 +68,9 @@ class BookingViewSet(viewsets.ModelViewSet):
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
+
+
+
+class MasterScheduleViewSet(viewsets.ModelViewSet):
+    queryset = MasterSchedule.objects.all()
+    serializer_class = MasterScheduleSerializer
