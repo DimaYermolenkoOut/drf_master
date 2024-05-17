@@ -35,8 +35,8 @@ def write_google_sheet_books_report():
         range_end = 'E' + str(len(books_data) + 1)
         write_to_sheet(f"A1:{range_end}", books_data)
 
-    if __name__ == "__main__":
-        write_google_sheet_books_report()
+    # if __name__ == "__main__":
+    #     write_google_sheet_books_report()
 
 
 @shared_task
@@ -44,7 +44,7 @@ def hello_world_task():
     print('Hello, World!')
 
 
-@shared_task
+@shared_task()
 def process_slots(master_id, service_id, date):
     master = User.objects.get(id=master_id)
     service = Service.objects.get(id=service_id)
@@ -55,6 +55,7 @@ def process_slots(master_id, service_id, date):
 
     serialized_slots = SlotSerializer(slots, many=True).data
     return serialized_slots
+    # print(serialized_slots)
 
 
 

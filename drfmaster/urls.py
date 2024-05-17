@@ -26,10 +26,12 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg.views import get_schema_view
 
-import drfcalendar
+from django.views.decorators.csrf import csrf_exempt
 
+from graphene_django.views import GraphQLView
 from rest_framework.routers import DefaultRouter
 from drfcalendar.viewsets import slots, BookingViewSet, slots_view
+from .schema import schema
 
 router = DefaultRouter()
 router.register('bookings', BookingViewSet)
@@ -52,7 +54,6 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('authentication.urls')),
-
     path("", TemplateView.as_view(template_name="index.html")),
     path('accounts/', include('allauth.urls')),
     path("logout", LogoutView.as_view()),
@@ -64,7 +65,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
 
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-
-
+    path("graphql/", GraphQLView.as_view(graphiql=True, schema=schema)),
+    # path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

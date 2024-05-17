@@ -1,61 +1,106 @@
-version: "3"
+#version: "3"
+#services:
+#  db:
+#    image: postgres:latest
+#    environment:
+#      POSTGRES_DB: postgres
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#    ports:
+#      - "54323:5432"
+#  redis:
+#    image: "redis:latest"
+#  web:
+#    build:
+#      context: .
+#    image: drfmaster-web
+#    ports:
+#      - "8002:8000"
+#    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+#    environment:
+#        - DB_HOST=db
+#        - DB_NAME=postgres
+#        - DB_USER=postgres
+#        - DB_PASSWORD=postgres
+#        - CELERY_BROKER_URL=redis://redis:6379/0
+#        - CELERY_RESULT_BACKEND=redis://redis:6379/0
+#    depends_on:
+#        - db
+#        - redis
+#    volumes:
+#      - .:/app
+#    restart: always
+#  migration:
+#    build: .
+#    command: ["python", "manage.py", "migrate"]
+#    environment:
+#        - DB_HOST=db
+#        - DB_NAME=postgres
+#        - DB_USER=postgres
+#        - DB_PASSWORD=postgres
+#    depends_on:
+#        - db
+#    restart: on-failure
+#    volumes:
+#      - .:/app
+#  celery:
+#    image: drfmaster-web
+#    command: ["celery", "-A", "drfmaster.celery", "worker", "--loglevel=info", "--beat"]
+#    environment:
+#        - DB_HOST=db
+#        - DB_NAME=postgres
+#        - DB_USER=postgres
+#        - DB_PASSWORD=postgres
+#        - CELERY_BROKER_URL=redis://redis:6379/0
+#        - CELERY_RESULT_BACKEND=redis://redis:6379/0
+#    depends_on:
+#        - db
+#        - redis
+#    volumes:
+#        - .:/app
+#    restart: always
+version: '3.9'
+
 services:
   db:
-    image: postgres:latest
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "54323:5432"
+      POSTGRES_DB: drfmaster
+      POSTGRES_USER: drfmasteruser
+      POSTGRES_PASSWORD: drfmasterpassword
+
   redis:
-    image: "redis:latest"
+    image: redis:6
+
   web:
-    build:
-      context: .
-    image: drfmaster-web
-    ports:
-      - "8002:8000"
-    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-    environment:
-        - DB_HOST=db
-        - DB_NAME=postgres
-        - DB_USER=postgres
-        - DB_PASSWORD=postgres
-        - CELERY_BROKER_URL=redis://redis:6379/0
-        - CELERY_RESULT_BACKEND=redis://redis:6379/0
-    depends_on:
-        - db
-        - redis
-    volumes:
-      - .:/app
-    restart: always
-  migration:
     build: .
-    command: ["python", "manage.py", "migrate"]
-    environment:
-        - DB_HOST=db
-        - DB_NAME=postgres
-        - DB_USER=postgres
-        - DB_PASSWORD=postgres
-    depends_on:
-        - db
-    restart: on-failure
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
-  celery:
-    image: drfmaster-web
-    command: ["celery", "-A", "drfmaster.celery", "worker", "--loglevel=info", "--beat"]
-    environment:
-        - DB_HOST=db
-        - DB_NAME=postgres
-        - DB_USER=postgres
-        - DB_PASSWORD=postgres
-        - CELERY_BROKER_URL=redis://redis:6379/0
-        - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    ports:
+      - "8000:8000"
     depends_on:
-        - db
-        - redis
+      - db
+      - redis
+    environment:
+      DJANGO_SETTINGS_MODULE: drfmaster.settings
+      DATABASE_URL: postgres://drfmasteruser:drfmasterpassword@db:5432/drfmaster
+      REDIS_URL: redis://redis:6379/0
+
+  celery:
+    build: .
+    command: celery -A drfmaster worker --loglevel=info
     volumes:
-        - .:/app
-    restart: always
+      - .:/app
+    depends_on:
+      - db
+      - redis
+    environment:
+      DJANGO_SETTINGS_MODULE: drfmaster.settings
+      DATABASE_URL: postgres://drfmasteruser:drfmasterpassword@db:5432/drfmaster
+      REDIS_URL: redis://redis:6379/0
+
+volumes:
+  postgres_data:

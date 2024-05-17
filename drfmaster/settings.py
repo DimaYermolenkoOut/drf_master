@@ -61,6 +61,7 @@ INSTALLED_APPS = [
 
     "django_celery_beat",
     'django_celery_results',
+    "graphene_django",
 
 ]
 SWAGGER_SETTINGS = {
@@ -109,7 +110,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'drfmaster.wsgi.application'
-
+GRAPHENE = {
+    "SCHEMA": "drfmaster.schema.schema"
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -120,11 +123,24 @@ WSGI_APPLICATION = 'drfmaster.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-
+# цей код працює
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=f"postgres://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@localhost:5432/{os.getenv('POSTGRES_DB')}")
+# }
+# цей код краще для doker
 DATABASES = {
-    'default': dj_database_url.config(default=f"postgres://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@localhost:5432/{os.getenv('POSTGRES_DB')}")
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'DB_HOST': os.getenv('DB_HOST'),
+        # для doker
+        # 'HOST': 'db',
+        'PORT': '5432',
+    }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -262,7 +278,7 @@ CELERY_BROKER_URL = os.environ["CELERY_BROKER_URL"]
 CELERY_BEAT_SCHEDULE = {
     'hello_world': {
         'task': 'drfcalendar.tasks.hello_world',
-        'schedule': 5.0,
+        'schedule': 2.0,
     },
     'another_task': {
         'task': 'drfcalendar.tasks.process_slots',
@@ -270,5 +286,6 @@ CELERY_BEAT_SCHEDULE = {
 
     },
 }
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
+# CELERY_RESULT_BACKEND = "django-db"
 
-CELERY_RESULT_BACKEND = "django-db"
