@@ -59,48 +59,50 @@
 #    volumes:
 #        - .:/app
 #    restart: always
-version: '3.9'
+#version: '3.9'
+#
+#services:
+#  db:
+#    image: postgres:13
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data/
+#    environment:
+#      POSTGRES_DB: drfmaster
+#      POSTGRES_USER: drfmasteruser
+#      POSTGRES_PASSWORD: drfmasterpassword
+#
+#  redis:
+#    image: redis:6
+#
+#  web:
+#    build: .
+#    command: python manage.py runserver 0.0.0.0:8000
+#    volumes:
+#      - .:/app
+#    ports:
+#      - "8000:8000"
+#    depends_on:
+#      - db
+#      - redis
+#    environment:
+#      DJANGO_SETTINGS_MODULE: drfmaster.settings
+#      DATABASE_URL: postgres://drfmasteruser:drfmasterpassword@db:5432/drfmaster
+#      REDIS_URL: redis://redis:6379/0
+#
+#  celery:
+#    build: .
+#    command: celery -A drfmaster worker --loglevel=info
+#    volumes:
+#      - .:/app
+#    depends_on:
+#      - db
+#      - redis
+#    environment:
+#      DJANGO_SETTINGS_MODULE: drfmaster.settings
+#      DATABASE_URL: postgres://drfmasteruser:drfmasterpassword@db:5432/drfmaster
+#      REDIS_URL: redis://redis:6379/0
+#
+#volumes:
+#  postgres_data:
 
-services:
-  db:
-    image: postgres:13
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      POSTGRES_DB: drfmaster
-      POSTGRES_USER: drfmasteruser
-      POSTGRES_PASSWORD: drfmasterpassword
-
-  redis:
-    image: redis:6
-
-  web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/app
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-      - redis
-    environment:
-      DJANGO_SETTINGS_MODULE: drfmaster.settings
-      DATABASE_URL: postgres://drfmasteruser:drfmasterpassword@db:5432/drfmaster
-      REDIS_URL: redis://redis:6379/0
-
-  celery:
-    build: .
-    command: celery -A drfmaster worker --loglevel=info
-    volumes:
-      - .:/app
-    depends_on:
-      - db
-      - redis
-    environment:
-      DJANGO_SETTINGS_MODULE: drfmaster.settings
-      DATABASE_URL: postgres://drfmasteruser:drfmasterpassword@db:5432/drfmaster
-      REDIS_URL: redis://redis:6379/0
-
-volumes:
-  postgres_data:
+#for mysql
