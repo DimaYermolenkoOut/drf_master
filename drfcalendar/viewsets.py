@@ -10,7 +10,7 @@ from rest_framework.response import Response
 
 from drfcalendar.availability import get_slots_for_service
 from drfcalendar.models import Service, Booking
-from drfcalendar.serializers import SlotSerializer, BookingSerializer
+from drfcalendar.serializers import SlotSerializer, BookingSerializer, ServiceSerializer
 from django.http import JsonResponse
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -63,3 +63,7 @@ class BookingViewSet(viewsets.ModelViewSet):
         except ValidationError as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
+
+class ServiceViewSet(viewsets.ModelViewSet):
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer

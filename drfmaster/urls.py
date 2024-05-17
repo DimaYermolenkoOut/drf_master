@@ -30,11 +30,12 @@ from django.views.decorators.csrf import csrf_exempt
 
 from graphene_django.views import GraphQLView
 from rest_framework.routers import DefaultRouter
-from drfcalendar.viewsets import slots, BookingViewSet, slots_view
+from drfcalendar.viewsets import slots, BookingViewSet, slots_view, ServiceViewSet
 from .schema import schema
 
 router = DefaultRouter()
 router.register('bookings', BookingViewSet)
+router.register('services', ServiceViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(

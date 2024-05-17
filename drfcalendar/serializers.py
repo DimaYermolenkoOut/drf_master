@@ -1,7 +1,7 @@
 from django.db.migrations import serializer
 from rest_framework import serializers
 
-from drfcalendar.models import Booking
+from drfcalendar.models import Booking, Service
 
 
 class SlotSerializer(serializers.Serializer):
@@ -13,3 +13,9 @@ class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
         fields = ('id', 'start_time', 'end_time', 'client', 'master', 'service')
+
+
+class ServiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Service
+        fields = ('id', 'name', 'duration')
