@@ -124,23 +124,37 @@ GRAPHENE = {
 #     }
 # }
 # цей код працює
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=f"postgres://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@localhost:5432/{os.getenv('POSTGRES_DB')}")
-# }
-# цей код краще для doker
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'DB_HOST': os.getenv('DB_HOST'),
-        # для doker
-        # 'HOST': 'db',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default=f"postgres://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@localhost:5432/{os.getenv('POSTGRES_DB')}")
 }
+# цей код краще для doker
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('POSTGRES_DB'),
+#         'USER': os.getenv('POSTGRES_USER'),
+#         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+#         # 'DB_HOST': os.getenv('DB_HOST'),
+#         # для doker
+#         'HOST': 'db',
+#         'PORT': '5432',
+#     }
+# }
+
+# for mysql
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'drfmaster',
+#         'USER': 'drfmasteruser',
+#         'PASSWORD': 'drfmasterpassword',
+#         'HOST': 'db',
+#         'PORT': '3306',
+#     }
+# }
+# Настройки для SILENCED_SYSTEM_CHECKS
+SILENCED_SYSTEM_CHECKS = ["models.W036"]
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -274,18 +288,19 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 # Celery settings
 CELERY_BROKER_URL = os.environ["CELERY_BROKER_URL"]
-
-CELERY_BEAT_SCHEDULE = {
-    'hello_world': {
-        'task': 'drfcalendar.tasks.hello_world',
-        'schedule': 2.0,
-    },
-    'another_task': {
-        'task': 'drfcalendar.tasks.process_slots',
-        'schedule': 10.0,
-
-    },
-}
 CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
+#
+# CELERY_BEAT_SCHEDULE = {
+#     'hello_world': {
+#         'task': 'drfcalendar.tasks.hello_world',
+#         'schedule': 2.0,
+#     },
+#     'another_task': {
+#         'task': 'drfcalendar.tasks.process_slots',
+#         'schedule': 10.0,
+#
+#     },
+# }
+
 # CELERY_RESULT_BACKEND = "django-db"
 

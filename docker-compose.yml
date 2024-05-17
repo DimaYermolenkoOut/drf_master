@@ -105,4 +105,163 @@
 #volumes:
 #  postgres_data:
 
-#for mysql
+############################################################for mysql
+#version: '3.9'
+#
+#services:
+#  db:
+#    image: mysql:8
+#    volumes:
+#      - mysql_data:/var/lib/mysql
+#    environment:
+#      MYSQL_DATABASE: drfmaster
+#      MYSQL_USER: drfmasteruser
+#      MYSQL_PASSWORD: drfmasterpassword
+#      MYSQL_ROOT_PASSWORD: rootpassword
+#
+#  redis:
+#    image: redis:6
+#
+#  web:
+#    build: .
+#    command: python manage.py runserver 0.0.0.0:8000
+#    volumes:
+#      - .:/app
+#    ports:
+#      - "8000:8000"
+#    depends_on:
+#      - db
+#      - redis
+#    environment:
+#      DJANGO_SETTINGS_MODULE: drfmaster.settings
+#      DATABASE_URL: mysql://drfmasteruser:drfmasterpassword@db:3306/drfmaster
+#      REDIS_URL: redis://redis:6379/0
+#
+#  celery:
+#    build: .
+#    command: celery -A drfmaster worker --loglevel=info
+#    volumes:
+#      - .:/app
+#    depends_on:
+#      - db
+#      - redis
+#    environment:
+#      DJANGO_SETTINGS_MODULE: drfmaster.settings
+#      DATABASE_URL: mysql://drfmasteruser:drfmasterpassword@db:3306/drfmaster
+#      REDIS_URL: redis://redis:6379/0
+#
+#volumes:
+#  mysql_data:
+#зpostgresql
+#version: '3.8'
+#
+#services:
+#  db:
+#    image: postgres:latest
+#    environment:
+#      POSTGRES_DB: drfmaster
+#      POSTGRES_USER: drfmasteruser
+#      POSTGRES_PASSWORD: drfmasterpassword
+#    ports:
+#      - "54323:5432"
+#
+#  redis:
+#    image: redis:latest
+#
+#  web:
+#    build:
+#      context: .
+#    image: drfmaster-web
+#    ports:
+#      - "8000:8000"
+#    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+#    environment:
+#        - DB_HOST=db
+#        - DB_NAME=drfmaster
+#        - DB_USER=drfmasteruser
+#        - DB_PASSWORD=drfmasterpassword
+#        - CELERY_BROKER_URL=redis://redis:6379/0
+#        - CELERY_RESULT_BACKEND=redis://redis:6379/0
+#    depends_on:
+#        - db
+#        - redis
+#    volumes:
+#      - .:/app
+#    restart: always
+#
+#  migration:
+#    build: .
+#    command: ["python", "manage.py", "migrate"]
+#    environment:
+#        - DB_HOST=db
+#        - DB_NAME=drfmaster
+#        - DB_USER=drfmasteruser
+#        - DB_PASSWORD=drfmasterpassword
+#    depends_on:
+#        - db
+#    restart: on-failure
+#    volumes:
+#      - .:/app
+#
+#  celery:
+#    image: drfmaster-web
+#    command: ["celery", "-A", "drfmaster.celery", "worker", "--loglevel=info", "--beat"]
+#    environment:
+#        - DB_HOST=db
+#        - DB_NAME=drfmaster
+#        - DB_USER=drfmasteruser
+#        - DB_PASSWORD=drfmasterpassword
+#        - CELERY_BROKER_URL=redis://redis:6379/0
+#        - CELERY_RESULT_BACKEND=redis://redis:6379/0
+#    depends_on:
+#        - db
+#        - redis
+#    volumes:
+#        - .:/app
+##    restart: always
+############################################################for mysql 2
+version: '3.9'
+
+services:
+  db:
+    image: mysql:8
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: drfmaster
+      MYSQL_USER: drfmasteruser
+      MYSQL_PASSWORD: drfmasterpassword
+      MYSQL_ROOT_PASSWORD: rootpassword
+
+  redis:
+    image: redis:6
+
+  web:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    environment:
+      DJANGO_SETTINGS_MODULE: drfmaster.settings
+      DATABASE_URL: mysql://drfmasteruser:drfmasterpassword@db:3306/drfmaster
+      REDIS_URL: redis://redis:6379/0
+
+  celery:
+    build: .
+    command: celery -A drfmaster worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+    environment:
+      DJANGO_SETTINGS_MODULE: drfmaster.settings
+      DATABASE_URL: mysql://drfmasteruser:drfmasterpassword@db:3306/drfmaster
+      REDIS_URL: redis://redis:6379/0
+
+volumes:
+  mysql_data:
