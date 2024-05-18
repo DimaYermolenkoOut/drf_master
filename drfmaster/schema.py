@@ -1,9 +1,6 @@
 from datetime import timedelta
 from decimal import Decimal
-
-
 from authentication.models import User
-
 import graphene
 from graphene_django import DjangoObjectType
 from drfcalendar.models import Booking, Service, MasterSchedule
@@ -14,6 +11,7 @@ from income.models import Income
 class UserType(DjangoObjectType):
     class Meta:
         model = User
+
 
 class IncomeType(DjangoObjectType):
     class Meta:

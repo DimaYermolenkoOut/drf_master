@@ -54,6 +54,7 @@ def slots_view(request, master_id, service_id):
 
     return JsonResponse(slots_data)
 
+
 class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer

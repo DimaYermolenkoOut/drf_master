@@ -5,7 +5,7 @@ from celery import shared_task
 from authentication.models import User
 from drfcalendar.availability import get_slots_for_service
 from drfcalendar.models import Booking, Service
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from drfcalendar.serializers import SlotSerializer
 from google_sheets.api import write_to_sheet
@@ -14,9 +14,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'drfmaster.settings')
 django.setup()
 
 
-
-
-def write_google_sheet_books_report():
+@shared_task
+def write_google_sheet_books_report_task():
     books = Booking.objects.all()
     print(books)
 
@@ -77,4 +76,3 @@ def process_slots(master_id, service_id, date):
 # tube.ermolenko@gmail.com	less-1 60	2024-05-15 16:30:00+00:00	2024-05-15 17:30:00+00:00
 # tube.ermolenko@gmail.com	less-1 60	2024-05-15 06:30:00+00:00	2024-05-15 07:30:00+00:00
 # tube.ermolenko@gmail.com	less-1 60	2024-05-15 07:30:00+00:00	2024-05-15 08:30:00+00:00
-

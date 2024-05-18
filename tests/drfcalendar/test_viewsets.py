@@ -6,6 +6,7 @@ from drfcalendar.models import Booking, Service, MasterSchedule  # Импорт 
 from datetime import timedelta, datetime, time
 from django.utils import timezone
 
+
 class BookingViewSetTestCase(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', email='test@example.com', password='password')
