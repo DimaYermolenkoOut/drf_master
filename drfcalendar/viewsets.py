@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import ValidationError
 from rest_framework import status
 
@@ -9,6 +10,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from drfcalendar.availability import get_slots_for_service
+from drfcalendar.filters import BookingFilter
 from drfcalendar.models import Service, Booking, MasterSchedule
 from drfcalendar.serializers import SlotSerializer, BookingSerializer, ServiceSerializer, \
     MasterScheduleSerializer
@@ -58,6 +60,9 @@ def slots_view(request, master_id, service_id):
 class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
+    filter_class = BookingFilter
+    filter_backends = [DjangoFilterBackend]
+
 
     def create(self, request, *args, **kwargs):
         try:
@@ -69,7 +74,6 @@ class BookingViewSet(viewsets.ModelViewSet):
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
-
 
 
 class MasterScheduleViewSet(viewsets.ModelViewSet):

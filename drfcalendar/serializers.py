@@ -12,7 +12,8 @@ class SlotSerializer(serializers.Serializer):
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
-        fields = ('id', 'start_time', 'end_time', 'client', 'master', 'service')
+        # fields = ('id', 'start_time', 'end_time', 'client', 'master', 'service')
+        fields = '__all__'
 
 
 class ServiceSerializer(serializers.ModelSerializer):
