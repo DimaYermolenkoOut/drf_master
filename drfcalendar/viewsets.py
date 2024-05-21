@@ -79,3 +79,5 @@ class ServiceViewSet(viewsets.ModelViewSet):
 class MasterScheduleViewSet(viewsets.ModelViewSet):
     queryset = MasterSchedule.objects.all()
     serializer_class = MasterScheduleSerializer
+
+

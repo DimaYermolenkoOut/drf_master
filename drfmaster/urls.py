@@ -30,6 +30,8 @@ from django.views.decorators.csrf import csrf_exempt
 
 from graphene_django.views import GraphQLView
 from rest_framework.routers import DefaultRouter
+
+from drfcalendar.filters import BookingFilter
 from drfcalendar.viewsets import slots, BookingViewSet, slots_view, ServiceViewSet, \
     MasterScheduleViewSet
 from .schema import schema
@@ -71,4 +73,5 @@ urlpatterns = [
     path("graphql/", GraphQLView.as_view(graphiql=True, schema=schema)),
     # path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+
 ]
