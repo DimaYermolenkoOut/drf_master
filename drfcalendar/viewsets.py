@@ -60,8 +60,8 @@ def slots_view(request, master_id, service_id):
 class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
-    filter_class = BookingFilter
-    filter_backends = [DjangoFilterBackend]
+    filterset_class = BookingFilter
+    filter_backends = (DjangoFilterBackend, )  # DjangoFilterBackend
 
 
     def create(self, request, *args, **kwargs):
