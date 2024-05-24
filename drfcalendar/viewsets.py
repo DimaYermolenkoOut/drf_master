@@ -10,7 +10,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from drfcalendar.availability import get_slots_for_service
-from drfcalendar.filters import BookingFilter
+from drfcalendar.filters import BookingFilter, SlotFilter
 from drfcalendar.models import Service, Booking, MasterSchedule
 from drfcalendar.serializers import SlotSerializer, BookingSerializer, ServiceSerializer, \
     MasterScheduleSerializer
@@ -53,6 +53,9 @@ def slots_view(request, master_id, service_id):
         slots = get_slots_for_service(master, start_date, service)
         slots_data[start_date.strftime('%Y-%m-%d')].extend(SlotSerializer(slots, many=True).data)
         start_date += timedelta(days=1)
+
+    # filter_class = SlotFilter
+    # filter_backends = (DjangoFilterBackend, )
 
     return JsonResponse(slots_data)
 

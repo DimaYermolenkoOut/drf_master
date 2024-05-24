@@ -274,8 +274,10 @@ SOCIALACCOUNT_PROVIDERS = {
 # Django-allauth
 SITE_ID = 2
 
-LOGIN_REDIRECT_URL = '/admin'
+LOGIN_REDIRECT_URL = '/docs'
 LOGOUT_REDIRECT_URL = '/'
+redirect_uri = 'http://dima.yermolenko.theweb.place:8000/accounts/google/login/callback/'
+
 
 SOCIALACCOUNT_STORE_TOKENS = True
 
