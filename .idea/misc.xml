@@ -3,7 +3,7 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.9" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Remote Python 3.10.12 (sftp://dimay@194.110.248.19:22/home/dimay/.virtualenvs/drfmaster/bin/python)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (drfmaster)" project-jdk-type="Python SDK" />
   <component name="PyCharmProfessionalAdvertiser">
     <option name="shown" value="true" />
   </component>

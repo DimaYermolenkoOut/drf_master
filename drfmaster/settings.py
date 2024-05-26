@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', '0.0.0.0', '194.110.248.19', 'drfmaster.herokuapp.com']
+ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', '0.0.0.0', '194.110.248.19', 'drfmaster.herokuapp.com','ec2-16-16-156-120.eu-north-1.compute.amazonaws.com']
 
 AUTH_USER_MODEL = 'authentication.User'
 # Application definition
@@ -310,3 +310,5 @@ CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
 
 # CELERY_RESULT_BACKEND = "django-db"
 
+SECURE_SSL_REDIRECT = False
+SECURE_PROXY_SSL_HEADER = ()

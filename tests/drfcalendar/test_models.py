@@ -6,7 +6,7 @@ from django.utils import timezone
 import pytz
 from drfcalendar.availability import get_slots_for_service, Slot  # Импортируем get_slots_for_service и Slot
 
-# Импортируем пользовательскую модель User из вашего приложения authentication
+# Імпортуємо призначену для користувача модель User із додатка authentication
 from authentication.models import User
 
 class ServiceModelTest(TestCase):
