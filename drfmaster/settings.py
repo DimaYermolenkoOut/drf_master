@@ -13,7 +13,6 @@ import datetime
 from pathlib import Path
 from dotenv import load_dotenv
 import os
-import dj_database_url
 
 
 load_dotenv()
@@ -26,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-^d7!o+xk2+9mjnzo_g-b#675+v+b6oxl*=(yg9*+%@ke3^0c$&')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
