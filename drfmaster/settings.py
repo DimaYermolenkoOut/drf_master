@@ -125,10 +125,10 @@ GRAPHENE = {
 #     }
 # }
 # цей код працює
-DATABASES = {
-    'default': dj_database_url.config(
-        default=f"postgres://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@localhost:5432/{os.getenv('POSTGRES_DB')}")
-}
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=f"postgres://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@localhost:5432/{os.getenv('POSTGRES_DB')}")
+# }
 # цей код краще для doker
 # DATABASES = {
 #     'default': {
@@ -144,16 +144,16 @@ DATABASES = {
 # }
 
 # for mysql
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'drfmaster',
-#         'USER': 'drfmasteruser',
-#         'PASSWORD': 'drfmasterpassword',
-#         'HOST': 'db',
-#         'PORT': '3306',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('MYSQL_DATABASE'),
+        'USER': os.getenv('MYSQL_USER'),
+        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
+        'HOST': os.getenv('MYSQL_DB_HOST'),
+        'PORT': os.getenv('MYSQL_DB_PORT', '3306'),
+    }
+}
 # Настройки для SILENCED_SYSTEM_CHECKS
 SILENCED_SYSTEM_CHECKS = ["models.W036"]
 # Password validation
