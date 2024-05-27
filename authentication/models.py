@@ -28,17 +28,6 @@ class UserManager(BaseUserManager):
         user.is_staff = True
         user.save()
         
-    # def create_superuser(self, username, email, password=None, **extra_fields):
-    #     if password is None:
-    #         raise TypeError("Superusers must have a password.")
-    #     if email is None:
-    #         raise TypeError("Superusers must have an email.")
-
-    #     extra_fields.setdefault('is_staff', True)
-    #     extra_fields.setdefault('is_superuser', True)
-
-    #     return self.create_user(username, email, password, **extra_fields)
-
 
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, unique=True)

@@ -1,10 +1,11 @@
+
+
 from datetime import datetime, time, timedelta
 from django.utils import timezone
-
 from django.test import TestCase
-
 from authentication.models import User
 from drfcalendar.models import Booking, MasterSchedule, Service
+
 
 class IntegrationTestCase(TestCase):
     def test_bookings_api(self):
@@ -39,16 +40,16 @@ class IntegrationTestCase(TestCase):
         )
 
         # Выполнение GET запроса к эндпоинту бронирования
-        response = self.client.get('/bookings/')
+        response = self.client.get('/api/bookings/')
 
         # Проверка, что статус-код ответа 200 (OK)
         self.assertEqual(response.status_code, 200)
 
         # Проверка содержимого ответа
         self.assertEqual(response.json()['results'][0], {
-            'master': 'testuser',
+            'master': {'username': 'testuser'},
             'start_time': '2024-05-15T09:00:00Z',
             'end_time': '2024-05-15T10:00:00Z',
-            'client': 'testuser',
-            'service': 'testservice'
+            'client': {'username': 'testuser'},
+            'service': {'name': 'testservice'}
         })
