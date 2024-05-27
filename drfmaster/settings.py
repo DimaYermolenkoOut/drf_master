@@ -294,21 +294,21 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 # Celery settings
 CELERY_BROKER_URL = os.environ["CELERY_BROKER_URL"]
-CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
-#
-# CELERY_BEAT_SCHEDULE = {
-#     'hello_world': {
-#         'task': 'drfcalendar.tasks.hello_world',
-#         'schedule': 2.0,
-#     },
-#     'another_task': {
-#         'task': 'drfcalendar.tasks.process_slots',
-#         'schedule': 10.0,
-#
-#     },
-# }
+# CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
 
-# CELERY_RESULT_BACKEND = "django-db"
+CELERY_BEAT_SCHEDULE = {
+    'hello_world': {
+        'task': 'drfcalendar.tasks.hello_world',
+        'schedule': 2.0,
+    },
+    'another_task': {
+        'task': 'drfcalendar.tasks.process_slots',
+        'schedule': 10.0,
+
+    },
+}
+
+CELERY_RESULT_BACKEND = "django-db"
 
 SECURE_SSL_REDIRECT = False
 SECURE_PROXY_SSL_HEADER = ()
