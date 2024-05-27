@@ -230,7 +230,7 @@ volumes:
 #    environment:
 #      MYSQL_DATABASE: drfmaster
 #      MYSQL_USER: drfmasteruser
-#      MYSQL_PASSWORD: drfmasterpassword
+#      MYSQL_PASSWORD: drfmasterpassword1
 #      MYSQL_ROOT_PASSWORD: rootpassword
 #
 #  redis:
