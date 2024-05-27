@@ -126,23 +126,25 @@ GRAPHENE = {
 #     }
 # }
 # цей код працює
-DATABASES = {
-    'default': dj_database_url.config(
-        default=f"postgres://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@localhost:5432/{os.getenv('POSTGRES_DB')}")
-}
-# цей код краще для doker
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.getenv('POSTGRES_DB'),
-#         'USER': os.getenv('POSTGRES_USER'),
-#         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-#         # 'DB_HOST': os.getenv('DB_HOST'),
-#         # для doker
-#         'HOST': 'db',
-#         'PORT': '5432',
-#     }
+#     'default': dj_database_url.config(
+#         default=f"postgres://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@localhost:5432/{os.getenv('POSTGRES_DB')}")
 # }
+# цей код краще для doker
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'DB_HOST': os.getenv('DB_HOST'),
+        'HOST': '',
+        'PORT': '',
+        # для doker
+        # 'HOST': 'db',
+        # 'PORT': '5432',
+    }
+}
 
 # for mysql
 # DATABASES = {
