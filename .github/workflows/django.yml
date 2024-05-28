@@ -1,3 +1,56 @@
+#
+#name: Django CI
+#
+#on:
+#  push:
+#    branches: [ "master" ]
+#  pull_request:
+#    branches: [ "master" ]
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#    env:
+#      USE_SQLITE: False
+#      DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+#      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+#      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+#      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+#      DB_HOST: ${{ secrets.DB_HOST }}
+#      MYSQL_USER: ${{ secrets.MYSQL_USER }}
+#      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+#      MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+#      MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+#      MYSQL_DB_HOST: ${{ secrets.MYSQL_DB_HOST }}
+#      MYSQL_DB_PORT: ${{ secrets.MYSQL_DB_PORT }}
+#      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+#      EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
+#      EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
+#      CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL }}
+#      CELERY_RESULT_BACKEND: ${{ secrets.CELERY_RESULT_BACKEND }}
+#      CELERY_BACKEND: ${{ secrets.CELERY_BACKEND }}
+#      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+#    strategy:
+#      max-parallel: 4
+#    steps:
+#    - uses: actions/checkout@v3
+#    - name: Set up Python ${{ matrix.python-version }}
+#      uses: actions/setup-python@v3
+#      with:
+#        python-version: ${{ matrix.python-version }}
+#    - name: Install Dependencies
+#      run: |
+#        python -m pip install --upgrade pip
+#        pip install -r requirements.txt
+#    - name: Check pending migrations
+#      run: |
+#        python manage.py makemigrations --check --dry-run
+#    - name: Run Tests
+#      run: |
+#        coverage run manage.py test
+#    - name: Checking code coverage
+#      run: |
+#        coverage report
 
 name: Django CI
 
@@ -11,37 +64,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      USE_SQLITE: False
-      DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-      DB_HOST: ${{ secrets.DB_HOST }}
-      MYSQL_USER: ${{ secrets.MYSQL_USER }}
-      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-      MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-      MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-      MYSQL_DB_HOST: ${{ secrets.MYSQL_DB_HOST }}
-      MYSQL_DB_PORT: ${{ secrets.MYSQL_DB_PORT }}
-      SECRET_KEY: ${{ secrets.SECRET_KEY }}
-      EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
-      EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
-      CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL }}
-      CELERY_RESULT_BACKEND: ${{ secrets.CELERY_RESULT_BACKEND }}
-      CELERY_BACKEND: ${{ secrets.CELERY_BACKEND }}
-      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      # Ваши переменные окружения
     strategy:
       max-parallel: 4
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python
       uses: actions/setup-python@v3
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: 3.10
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+    - name: Output Environment Variables
+      run: |
+        echo "MYSQL_USER: $MYSQL_USER"
+        echo "MYSQL_PASSWORD: $MYSQL_PASSWORD"
+        # Вывод других переменных окружения
+    - name: Install MySQL
+      run: |
+        sudo apt-get update
+        sudo apt-get install mysql-server
     - name: Check pending migrations
       run: |
         python manage.py makemigrations --check --dry-run
