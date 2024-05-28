@@ -106,7 +106,8 @@ jobs:
         sudo apt-get install mysql-server
     - name: Create MySQL Database
       run: |
-        mysql -h ${{ secrets.MYSQL_DB_HOST }} -P ${{ secrets.MYSQL_DB_PORT }} -u ${{ secrets.MYSQL_USER }} -p"${{ secrets.MYSQL_PASSWORD }}" -e "CREATE DATABASE IF NOT EXISTS ${{ secrets.MYSQL_DATABASE }}"
+        mysql -h localhost -P 3306 -u ${{ secrets.MYSQL_USER }} -p"${{ secrets
+        .MYSQL_PASSWORD }}" -e "CREATE DATABASE IF NOT EXISTS ${{ secrets.MYSQL_DATABASE }}"
     - name: Apply Migrations
       run: |
         python manage.py makemigrations --check --dry-run
