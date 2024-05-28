@@ -34,8 +34,10 @@ select * from drfcalendar_master]]></console>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="1ae31928-21e4-4134-873b-86452353d7ea" />
+    <connection id="b770207f-d9a5-418e-8af7-1782c84fc541" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="b770207f-d9a5-418e-8af7-1782c84fc541" dataset="drfmaster.auth_group_permissions" active-filter-id="" />
     <filter-actions connection-id="1ae31928-21e4-4134-873b-86452353d7ea" dataset="public.drfcalendar_booking" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">

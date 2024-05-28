@@ -1,4 +1,4 @@
-from django.contrib.postgres.fields import ArrayField
+# from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.dispatch import receiver
@@ -8,6 +8,7 @@ from authentication.utils import Util
 from drfcalendar.availability import get_slots_for_service
 from telegram.client import send_message
 
+from django.conf import settings
 
 class Service(models.Model):
     name = models.CharField(max_length=120)
@@ -16,15 +17,34 @@ class Service(models.Model):
     def __str__(self):
         return self.name
 
+# for postgresql_version in ['10', '11', '12', '13', '14']:
+# class MasterSchedule(models.Model):
+#     master = models.OneToOneField(User, on_delete=models.CASCADE, related_name='master_schedule')
+#     working_days = ArrayField(models.IntegerField())
+#     start_time = models.TimeField()
+#     end_time = models.TimeField()
+#
+#     def __str__(self):
+#         return self.master.email
 
+
+# for mysql
 class MasterSchedule(models.Model):
-    master = models.OneToOneField(User, on_delete=models.CASCADE, related_name='master_schedule')
-    working_days = ArrayField(models.IntegerField())
+    master = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='master_schedule')
+    working_days = models.CharField(max_length=255)  # Хранение дней в виде строки, разделенной запятыми
     start_time = models.TimeField()
     end_time = models.TimeField()
 
     def __str__(self):
         return self.master.email
+
+    def get_working_days(self):
+        # Возвращает список целых чисел из строки, разделенной запятыми
+        return list(map(int, self.working_days.split(',')))
+
+    def set_working_days(self, days):
+        # Устанавливает рабочие дни в виде строки, разделенной запятыми
+        self.working_days = ','.join(map(str, days))
 
 
 class Booking(models.Model):
