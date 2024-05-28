@@ -153,8 +153,8 @@ DATABASES = {
         'NAME': os.getenv('MYSQL_DATABASE'),
         'USER': os.getenv('MYSQL_USER'),
         'PASSWORD': os.getenv('MYSQL_PASSWORD'),
-        'HOST': os.getenv('MYSQL_DB_HOST'),
-        'PORT': os.getenv('MYSQL_DB_PORT', '3306'),
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 # Настройки для SILENCED_SYSTEM_CHECKS

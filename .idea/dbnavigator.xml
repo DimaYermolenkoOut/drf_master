@@ -22,8 +22,8 @@ select * from drfcalendar_service;
 select * from drfcalendar_master_schedule;
 select * from drfcalendar_master]]></console>
     </connection>
-    <connection id="b770207f-d9a5-418e-8af7-1782c84fc541">
-      <console name="Connection 1" type="STANDARD" schema="" session="Main" />
+    <connection id="505c7b0e-91bb-4d21-8017-619e31a095eb">
+      <console name="MySQL" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -34,14 +34,21 @@ select * from drfcalendar_master]]></console>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="1ae31928-21e4-4134-873b-86452353d7ea" />
-    <connection id="b770207f-d9a5-418e-8af7-1782c84fc541" />
+    <connection id="505c7b0e-91bb-4d21-8017-619e31a095eb" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="b770207f-d9a5-418e-8af7-1782c84fc541" dataset="drfmaster.auth_group_permissions" active-filter-id="" />
     <filter-actions connection-id="1ae31928-21e4-4134-873b-86452353d7ea" dataset="public.drfcalendar_booking" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
+  </component>
+  <component name="DBNavigator.Project.MethodExecutionManager">
+    <method-browser />
+    <execution-history>
+      <group-entries value="true" />
+      <execution-inputs />
+    </execution-history>
+    <argument-values-cache />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
@@ -143,9 +150,9 @@ select * from drfcalendar_master]]></console>
           <object-name-filters />
         </object-filters>
       </connection>
-      <connection id="b770207f-d9a5-418e-8af7-1782c84fc541" active="true" signed="true">
+      <connection id="505c7b0e-91bb-4d21-8017-619e31a095eb" active="true" signed="true">
         <database>
-          <name value="Connection Mysql" />
+          <name value="MySQL" />
           <description value="" />
           <database-type value="MYSQL" />
           <config-type value="BASIC" />
@@ -160,8 +167,8 @@ select * from drfcalendar_master]]></console>
           <tns-folder value="" />
           <tns-profile value="" />
           <type value="USER_PASSWORD" />
-          <user value="drfmasteruser" />
-          <deprecated-pwd value="ZHJmbWFzdGVycGFzc3dvcmQx" />
+          <user value="root" />
+          <deprecated-pwd value="NTc4MDM1Ng==" />
         </database>
         <properties>
           <auto-commit value="false" />
