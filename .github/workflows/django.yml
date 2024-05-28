@@ -104,9 +104,14 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install mysql-server
-    - name: Check pending migrations
+    - name: Create MySQL Database
+      run: |
+        mysql -h ${{ secrets.MYSQL_DB_HOST }} -P ${{ secrets.MYSQL_DB_PORT }} -u ${{ secrets.MYSQL_USER }} -p${{ secrets.MYSQL_PASSWORD }} -e "CREATE DATABASE IF NOT EXISTS ${{ secrets.MYSQL_DATABASE }}"
+
+    - name: Apply Migrations
       run: |
         python manage.py makemigrations --check --dry-run
+        python manage.py migrate
     - name: Run Tests
       run: |
         coverage run manage.py test
