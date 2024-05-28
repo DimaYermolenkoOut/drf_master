@@ -64,7 +64,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # Ваши переменные окружения
+      USE_SQLITE: False
+      DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      MYSQL_USER: ${{ secrets.MYSQL_USER }}
+      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+      MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+      MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+      MYSQL_DB_HOST: ${{ secrets.MYSQL_DB_HOST }}
+      MYSQL_DB_PORT: ${{ secrets.MYSQL_DB_PORT }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
+      EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
+      CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL }}
+      CELERY_RESULT_BACKEND: ${{ secrets.CELERY_RESULT_BACKEND }}
+      CELERY_BACKEND: ${{ secrets.CELERY_BACKEND }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
     strategy:
       max-parallel: 4
     steps:
